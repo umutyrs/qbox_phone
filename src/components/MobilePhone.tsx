@@ -15,10 +15,13 @@ export const MobilePhone: React.FC = () => {
     setCurrentApp(null);
   };
 
+  const isValidComponent = typeof currentApp === 'function';
+
   return (
     <div className="relative">
       {/* Phone Frame - Premium Design */}
       <div className="w-[375px] h-[812px] bg-gradient-to-b from-gray-800 via-gray-900 to-black rounded-[3rem] p-1 shadow-2xl mx-auto relative">
+        
         {/* Phone Frame Border */}
         <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-gray-600 via-gray-700 to-gray-900 p-[1px]">
           <div className="w-full h-full rounded-[3rem] bg-gradient-to-b from-gray-800 via-gray-900 to-black" />
@@ -40,8 +43,8 @@ export const MobilePhone: React.FC = () => {
         
         {/* Screen */}
         <div className="absolute inset-2 rounded-[2.5rem] overflow-hidden bg-black z-10">
-          {currentApp ? (
-            React.createElement(currentApp, { onClose: closeApp })
+          {isValidComponent ? (
+            React.createElement(currentApp as React.ComponentType<{ onClose: () => void }>, { onClose: closeApp })
           ) : (
             <>
               {/* Dynamic Background */}
