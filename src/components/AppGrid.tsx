@@ -21,21 +21,30 @@ import {
  Headphones,
  Palette
 } from 'lucide-react';
+import { SocialHubApp } from './apps/SocialHubApp';
+import { ChatWaveApp } from './apps/ChatWaveApp';
+import { WebFlowApp } from './apps/WebFlowApp';
+import { SoundWaveApp } from './apps/SoundWaveApp';
+import { CalculatorApp } from './apps/CalculatorApp';
 
-export const AppGrid: React.FC = () => {
+interface AppGridProps {
+  onOpenApp: (appComponent: React.ComponentType<{ onClose: () => void }>) => void;
+}
+
+export const AppGrid: React.FC<AppGridProps> = ({ onOpenApp }) => {
   const apps = [
-   { icon: Users, label: 'SocialHub', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
-   { icon: Globe, label: 'WebFlow', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
-   { icon: MessageCircle, label: 'ChatWave', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+   { icon: Users, label: 'SocialHub', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', component: SocialHubApp },
+   { icon: Globe, label: 'WebFlow', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', component: WebFlowApp },
+   { icon: MessageCircle, label: 'ChatWave', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', component: ChatWaveApp },
    { icon: Mail, label: 'MailBox', gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
     
-   { icon: Music, label: 'SoundWave', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' },
+   { icon: Music, label: 'SoundWave', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)', component: SoundWaveApp },
    { icon: Calendar, label: 'TimeSync', gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)' },
    { icon: MapPin, label: 'NaviGo', gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)' },
    { icon: Camera, label: 'SnapLens', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
     
    { icon: Clock, label: 'ChronoX', gradient: 'linear-gradient(135deg, #434343 0%, #000000 100%)' },
-   { icon: Calculator, label: 'MathPro', gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)' },
+   { icon: Calculator, label: 'MathPro', gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)', component: CalculatorApp },
    { icon: Settings, label: 'ControlHub', gradient: 'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)' },
    { icon: FileText, label: 'NotePad', gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)' },
     
@@ -55,7 +64,7 @@ export const AppGrid: React.FC = () => {
             label={app.label}
            color={app.color}
            gradient={app.gradient}
-            onClick={() => console.log(`Opened ${app.label}`)}
+            onClick={() => app.component ? onOpenApp(app.component) : console.log(`Opened ${app.label}`)}
           />
         ))}
       </div>

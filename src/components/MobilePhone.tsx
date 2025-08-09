@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from './StatusBar';
 import { AppGrid } from './AppGrid';
 import { DockBar } from './DockBar';
 import { HomeIndicator } from './HomeIndicator';
 
 export const MobilePhone: React.FC = () => {
+  const [currentApp, setCurrentApp] = useState<React.ComponentType<{ onClose: () => void }> | null>(null);
+
+  const openApp = (appComponent: React.ComponentType<{ onClose: () => void }>) => {
+    setCurrentApp(appComponent);
+  };
+
+  const closeApp = () => {
+    setCurrentApp(null);
+  };
+
   return (
     <div className="relative">
       {/* Phone Frame - Premium Design */}
@@ -30,42 +40,48 @@ export const MobilePhone: React.FC = () => {
         
         {/* Screen */}
         <div className="absolute inset-2 rounded-[2.5rem] overflow-hidden bg-black z-10">
-          {/* Dynamic Background */}
-          <div 
-            className="absolute inset-0 opacity-80"
-            style={{
-              background: `
-                radial-gradient(ellipse at 30% 20%, rgba(120, 119, 198, 0.8) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 80%, rgba(255, 119, 198, 0.6) 0%, transparent 50%),
-                radial-gradient(ellipse at 20% 70%, rgba(119, 198, 255, 0.7) 0%, transparent 50%),
-                linear-gradient(135deg, 
-                  #667eea 0%, 
-                  #764ba2 25%, 
-                  #f093fb 50%, 
-                  #f5576c 75%, 
-                  #4facfe 100%
-                )
-              `
-            }}
-          />
-          
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-black/20" />
-          
-          {/* Content */}
-          <div className="relative z-10 flex flex-col h-full">
-            {/* Status Bar */}
-            <StatusBar className="pt-3" />
-            
-            {/* Main Content */}
-            <AppGrid />
-            
-            {/* Dock */}
-            <DockBar />
-            
-            {/* Home Indicator */}
-            <HomeIndicator />
-          </div>
+          {currentApp ? (
+            React.createElement(currentApp, { onClose: closeApp })
+          ) : (
+            <>
+              {/* Dynamic Background */}
+              <div 
+                className="absolute inset-0 opacity-80"
+                style={{
+                  background: `
+                    radial-gradient(ellipse at 30% 20%, rgba(120, 119, 198, 0.8) 0%, transparent 50%),
+                    radial-gradient(ellipse at 70% 80%, rgba(255, 119, 198, 0.6) 0%, transparent 50%),
+                    radial-gradient(ellipse at 20% 70%, rgba(119, 198, 255, 0.7) 0%, transparent 50%),
+                    linear-gradient(135deg, 
+                      #667eea 0%, 
+                      #764ba2 25%, 
+                      #f093fb 50%, 
+                      #f5576c 75%, 
+                      #4facfe 100%
+                    )
+                  `
+                }}
+              />
+              
+              {/* Dark overlay for better text readability */}
+              <div className="absolute inset-0 bg-black/20" />
+              
+              {/* Content */}
+              <div className="relative z-10 flex flex-col h-full">
+                {/* Status Bar */}
+                <StatusBar className="pt-3" />
+                
+                {/* Main Content */}
+                <AppGrid onOpenApp={openApp} />
+                
+                {/* Dock */}
+                <DockBar onOpenApp={openApp} />
+                
+                {/* Home Indicator */}
+                <HomeIndicator />
+              </div>
+            </>
+          )}
         </div>
       </div>
       
