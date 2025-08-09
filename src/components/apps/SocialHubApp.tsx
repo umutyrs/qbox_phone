@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Heart, MessageCircle, Share, MoreHorizontal, Search, Plus } from 'lucide-react';
-import { AppProps } from '../../types/App';
+
+type AppProps = {
+  onClose?: () => void;
+};
 
 export const SocialHubApp: React.FC<AppProps> = ({ onClose }) => {
-  const [activeTab, setActiveTab] = useState('feed');
+  const [activeTab, setActiveTab] = useState<'feed' | 'discover'>('feed');
 
   const posts = [
     {
@@ -43,7 +46,7 @@ export const SocialHubApp: React.FC<AppProps> = ({ onClose }) => {
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 pt-12">
         <div className="flex items-center justify-between mb-4">
-          <button onClick={onClose} className="p-2">
+          <button onClick={() => onClose?.()} className="p-2">
             <ArrowLeft size={24} />
           </button>
           <h1 className="text-xl font-bold">SocialHub</h1>
@@ -51,15 +54,15 @@ export const SocialHubApp: React.FC<AppProps> = ({ onClose }) => {
             <Search size={24} />
           </button>
         </div>
-        
+
         <div className="flex space-x-6">
-          <button 
+          <button
             className={`pb-2 ${activeTab === 'feed' ? 'border-b-2 border-white' : ''}`}
             onClick={() => setActiveTab('feed')}
           >
             Feed
           </button>
-          <button 
+          <button
             className={`pb-2 ${activeTab === 'discover' ? 'border-b-2 border-white' : ''}`}
             onClick={() => setActiveTab('discover')}
           >
@@ -86,15 +89,15 @@ export const SocialHubApp: React.FC<AppProps> = ({ onClose }) => {
                 <MoreHorizontal size={20} className="text-gray-400" />
               </button>
             </div>
-            
+
             <p className="text-gray-800 mb-3">{post.content}</p>
-            
+
             {post.image && (
               <div className="mb-3 h-48 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center text-6xl">
                 {post.image}
               </div>
             )}
-            
+
             <div className="flex items-center justify-between pt-3 border-t border-gray-100">
               <div className="flex items-center space-x-6">
                 <button className="flex items-center space-x-2 text-gray-600">
