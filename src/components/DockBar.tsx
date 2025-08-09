@@ -1,9 +1,6 @@
 import React from 'react';
 import { AppIcon } from './AppIcon';
-import { Phone, MessageCircle, Globe, Music } from 'lucide-react';
-import { ChatWaveApp } from './apps/ChatWaveApp';
-import { WebFlowApp } from './apps/WebFlowApp';
-import { SoundWaveApp } from './apps/SoundWaveApp';
+import { Phone, MessageCircle, Camera, Mail } from 'lucide-react';
 
 interface DockBarProps {
   onOpenApp: (appComponent: React.ComponentType<{ onClose: () => void }>) => void;
@@ -11,10 +8,10 @@ interface DockBarProps {
 
 export const DockBar: React.FC<DockBarProps> = ({ onOpenApp }) => {
   const dockApps = [
-   { icon: Phone, label: 'CallLink', gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)' },
-   { icon: MessageCircle, label: 'ChatWave', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', component: ChatWaveApp },
-   { icon: Globe, label: 'WebFlow', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', component: WebFlowApp },
-   { icon: Music, label: 'SoundWave', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)', component: SoundWaveApp }
+   { icon: Phone, label: 'Phone', gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)' },
+   { icon: MessageCircle, label: 'Messages', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+   { icon: Camera, label: 'Camera', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+   { icon: Mail, label: 'Mail', gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' }
   ];
 
   return (
@@ -28,7 +25,7 @@ export const DockBar: React.FC<DockBarProps> = ({ onOpenApp }) => {
               label=""
              gradient={app.gradient}
               size="medium"
-              onClick={() => app.component ? onOpenApp(app.component) : console.log(`Opened ${app.label} from dock`)}
+              onClick={() => console.log(`Opened ${app.label} from dock`)}
             />
           ))}
         </div>
