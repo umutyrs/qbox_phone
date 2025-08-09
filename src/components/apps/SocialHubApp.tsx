@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Heart, MessageCircle, Share, MoreHorizontal, Search, Plus } from 'lucide-react';
-
-type AppProps = {
-  onClose?: () => void;
-};
+import { AppProps } from '../../types/App';
 
 export const SocialHubApp: React.FC<AppProps> = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState<'feed' | 'discover'>('feed');
