@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppIcon } from './AppIcon';
 import { 
+  Phone,
   MessageCircle, 
   Camera, 
   Music, 
